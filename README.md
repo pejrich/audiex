@@ -35,13 +35,16 @@ iex> Audiex.from_file("audio.wav")
 
 `from_file/2` also accepts sample rate(`sr: integer`) and `mono: bool` options
 ```elixir
-iex> Audiex.from_file("audio.wav", sr: 22050, mono: true) # `sr` option requires FFMPEG to be available in your PATH
+# `sr` option requires FFMPEG to be available in your PATH
+iex> Audiex.from_file("audio.wav", sr: 22050, mono: true) 
 {%Nx.Tensor<f32[1][753356] [[...], ...]>, 22050}
 ```
 
 If you happen to have a buffer of audio in memory rather than a file, there's a `from_buffer/1` function
 ```elixir
-# `File.read!/1` is just for demo purposes, if you have the audio on a file, use `from_file/2`, it's more efficient.
+# `File.read!/1` is just for demo purposes!
+# If you have the audio already on a file, use `from_file/2`, it's more efficient.
+# Pretend this buffer came from somewhere other than reading it from a file.
 iex> buffer = File.read!("audio.wav")
 iex> Audiex.from_buffer(buffer)
 ```
