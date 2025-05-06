@@ -26,24 +26,27 @@ jobs:
           - {target: x86_64-pc-windows-msvc, os: windows-2019}
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Extract project version
         shell: bash
         run: |
           # Get the project version from mix.exs
           echo "PROJECT_VERSION=$(sed -n 's/^  @version "\(.*\)"/\1/p' mix.exs | head -n1)" >> $GITHUB_ENV
-      - name: Install ALSA
-        shell: bash
-        run: |
-          export DEBIAN_FRONTEND=noninteractive
-          sudo apt-get update
-          sudo apt-get -y install apt-utils
-          sudo apt-get -y install libasound2-dev libudev-dev librust-alsa-sys-dev alsa-base alsa-utils
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: stable
           target: ${{ matrix.job.target }}
+      - name: Install ALSA
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libasound2-dev libudev-dev pkg-config libx11-dev libwayland-dev libxkbcommon-dev
+          sudo apt-get install -y librust-alsa-sys-dev alsa-base alsa-utils
+      - name: Install target (Linux MUSL)
+        if: matrix.target == 'x86_64-unknown-linux-musl'
+        run: |
+          rustup target add x86_64-unknown-linux-musl
       - name: Build the project
         id: build-crate
         uses: philss/rustler-precompiled-action@v1.0.1
