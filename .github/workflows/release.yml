@@ -36,9 +36,9 @@ jobs:
         shell: bash
         run: |
           export DEBIAN_FRONTEND=noninteractive
-          apt-get update
-          apt-get -y install apt-utils
-          apt-get -y install libasound2-dev libudev-dev librust-alsa-sys-dev alsa-base alsa-utils
+          sudo apt-get update
+          sudo apt-get -y install apt-utils
+          sudo apt-get -y install libasound2-dev libudev-dev librust-alsa-sys-dev alsa-base alsa-utils
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
