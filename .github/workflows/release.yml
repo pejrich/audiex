@@ -33,7 +33,9 @@ jobs:
           # Get the project version from mix.exs
           echo "PROJECT_VERSION=$(sed -n 's/^  @version "\(.*\)"/\1/p' mix.exs | head -n1)" >> $GITHUB_ENV
       - name: Install libasound2-dev
-        run: sudo apt install -y libasound2-dev
+        shell: bash
+        run: |
+          sudo apt-get install -y libasound2-dev libudev-dev
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
