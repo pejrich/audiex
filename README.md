@@ -23,7 +23,7 @@ be found at <https://hexdocs.pm/audiex>.
 
 Nothing too fancy, it just reads and writes audio. Behind the scenes most of the heavy lifting is done by Rust's [Rodio](https://github.com/RustAudio/rodio) library which uses [Symphonia](https://github.com/pdeljanov/Symphonia)
 
-```
+```elixir
 iex> Audiex.from_file("audio.wav")
 {%Nx.Tensor<f32[2][753356] [[...], ...]>, 44100}
 
@@ -32,7 +32,7 @@ iex> Audiex.from_file("audio.wav", sr: 22050, mono: true) # `sr` option requires
 ```
 Reading of files supports: WAV, MP3, FLAC, and OGG.
 
-```
+```elixir
 iex> Audiex.write!("audio.wav", audio_tensor, 44100)
 :ok
 ```
