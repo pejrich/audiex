@@ -2,6 +2,10 @@
 
 Rust bindings to read/write audio data to Elixir Nx tensors
 
+Nothing too fancy, it just reads and writes audio.
+
+Behind the scenes most of the heavy lifting is done by Rust's [Rodio](https://github.com/RustAudio/rodio) library which uses [Symphonia](https://github.com/pdeljanov/Symphonia)
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
@@ -21,22 +25,32 @@ be found at <https://hexdocs.pm/audiex>.
 
 ## Usage
 
-Nothing too fancy, it just reads and writes audio. Behind the scenes most of the heavy lifting is done by Rust's [Rodio](https://github.com/RustAudio/rodio) library which uses [Symphonia](https://github.com/pdeljanov/Symphonia)
+
+Reading of files supports: WAV, MP3, FLAC, and OGG.
 
 ```elixir
 iex> Audiex.from_file("audio.wav")
 {%Nx.Tensor<f32[2][753356] [[...], ...]>, 44100}
+```
 
+`from_file/2` also accepts sample rate(`sr: integer`) and `mono: bool` options
+```elixir
 iex> Audiex.from_file("audio.wav", sr: 22050, mono: true) # `sr` option requires FFMPEG to be available in your PATH
 {%Nx.Tensor<f32[1][753356] [[...], ...]>, 22050}
 ```
-Reading of files supports: WAV, MP3, FLAC, and OGG.
 
+If you happen to have a buffer of audio in memory rather than a file, there's a `from_buffer/1` function
+```elixir
+# `File.read!/1` is just for demo purposes, if you have the audio on a file, use `from_file/2`, it's more efficient.
+iex> buffer = File.read!("audio.wav")
+iex> Audiex.from_buffer(buffer)
+```
+
+Writing to files supports any format you want, as long as the format you want is WAV.
 ```elixir
 iex> Audiex.write!("audio.wav", audio_tensor, 44100)
 :ok
 ```
-Writing to files supports any format you want, as long as the format you want is WAV.
 
 ## Benchmark
 
