@@ -12,7 +12,7 @@ crate-type = ["cdylib"]
 base64 = "0.22.1"
 itertools = "0.14.0"
 rodio = "0.20.1"
-rustler = "0.36.1"
+rustler = { version = "0.36.1", default-features = false, features = ["derive", "nif_version_2_15"] }
 send_wrapper = "0.6.0"
 hound = "3.5.1"
 byteorder = "1.5.0"
