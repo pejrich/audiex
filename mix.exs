@@ -2,7 +2,7 @@ defmodule Audiex.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/pejrich/audiex"
-  @version "1.0.5"
+  @version "1.0.6"
 
   def project do
     [

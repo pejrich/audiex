@@ -32,10 +32,13 @@ jobs:
         run: |
           # Get the project version from mix.exs
           echo "PROJECT_VERSION=$(sed -n 's/^  @version "\(.*\)"/\1/p' mix.exs | head -n1)" >> $GITHUB_ENV
-      - name: Install libasound2-dev
+      - name: Install ALSA
         shell: bash
         run: |
-          sudo apt-get install -y libasound2-dev libudev-dev
+          export DEBIAN_FRONTEND=noninteractive
+          apt-get update
+          apt-get -y install apt-utils
+          apt-get -y install libasound2-dev libudev-dev librust-alsa-sys-dev alsa-base alsa-utils
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
