@@ -31,7 +31,7 @@ defmodule Audiex.MixProject do
   end
 
   def description,
-    do: "Rust-bindings to read/write audio files to Nx tensors"
+    do: "Rust bindings to read/write audio data to Elixir Nx tensors"
 
   def package do
     [
